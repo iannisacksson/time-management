@@ -1,6 +1,7 @@
 import { CreateDailyServiceSchedulesService } from '@modules/schedulingTimes/services/CreateDailyServiceSchedulesService';
 import { CreateSpecificServiceSchedulesService } from '@modules/schedulingTimes/services/CreateSpecificServiceSchedulesService';
 import { CreateWeeklyServiceSchedulesService } from '@modules/schedulingTimes/services/CreateWeeklyServiceSchedulesService';
+import { DeleteServiceRuleService } from '@modules/schedulingTimes/services/DeleteServiceRuleService';
 import { ListServiceRuleService } from '@modules/schedulingTimes/services/ListServiceRuleService';
 import { Request, Response } from 'express';
 
@@ -14,6 +15,7 @@ class TimesController {
     private createDailyServiceSchedulesService: CreateDailyServiceSchedulesService,
     private createWeeklyServiceSchedulesService: CreateWeeklyServiceSchedulesService,
     private listServiceRuleService: ListServiceRuleService,
+    private deleteServiceRuleService: DeleteServiceRuleService,
   ) {}
 
   public async create(request: Request, response: Response): Promise<Response> {
@@ -47,13 +49,21 @@ class TimesController {
         break;
     }
 
-    return response.json(time);
+    return response.status(201).json(time);
   }
 
   public async index(request: Request, response: Response): Promise<Response> {
     const times = this.listServiceRuleService.execute();
 
     return response.json(times);
+  }
+
+  public async delete(request: Request, response: Response): Promise<Response> {
+    const { id } = request.params;
+
+    await this.deleteServiceRuleService.execute({ timeId: id });
+
+    return response.status(204).send();
   }
 }
 

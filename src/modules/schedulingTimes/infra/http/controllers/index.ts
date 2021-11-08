@@ -3,6 +3,7 @@ import { TimesRepository } from '@modules/schedulingTimes/repositories/implement
 import { CreateDailyServiceSchedulesService } from '@modules/schedulingTimes/services/CreateDailyServiceSchedulesService';
 import { CreateSpecificServiceSchedulesService } from '@modules/schedulingTimes/services/CreateSpecificServiceSchedulesService';
 import { CreateWeeklyServiceSchedulesService } from '@modules/schedulingTimes/services/CreateWeeklyServiceSchedulesService';
+import { DeleteServiceRuleService } from '@modules/schedulingTimes/services/DeleteServiceRuleService';
 import { ListServiceRuleService } from '@modules/schedulingTimes/services/ListServiceRuleService';
 
 const timesRepository = TimesRepository.getInstance();
@@ -17,12 +18,14 @@ const createWeeklyServiceSchedulesService = new CreateWeeklyServiceSchedulesServ
   timesRepository,
 );
 const listServiceRuleService = new ListServiceRuleService(timesRepository);
+const deleteServiceRuleService = new DeleteServiceRuleService(timesRepository);
 
 const timesController = new TimesController(
   createSpecificServiceSchedulesService,
   createDailyServiceSchedulesService,
   createWeeklyServiceSchedulesService,
   listServiceRuleService,
+  deleteServiceRuleService,
 );
 
 export { timesController };
