@@ -1,4 +1,4 @@
-import { TimesController } from '@modules/schedulingTimes/infra/http/controllers/TimesController';
+import { TimesController } from '@modules/schedulingTimes/infra/http/controllers/timesController/TimesController';
 import { TimesRepository } from '@modules/schedulingTimes/repositories/implementations/TimesRepository';
 import { CreateDailyServiceSchedulesService } from '@modules/schedulingTimes/services/CreateDailyServiceSchedulesService';
 import { CreateSpecificServiceSchedulesService } from '@modules/schedulingTimes/services/CreateSpecificServiceSchedulesService';

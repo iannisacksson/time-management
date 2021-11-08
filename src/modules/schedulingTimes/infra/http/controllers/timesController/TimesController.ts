@@ -7,7 +7,7 @@ import { Request, Response } from 'express';
 
 import { ScheduleType } from '@shared/enums/ScheduleType';
 
-import { Time } from '../../../models/Time';
+import { Time } from '../../../../models/Time';
 
 class TimesController {
   constructor(

@@ -9,6 +9,13 @@ export const id = celebrate({
   },
 });
 
+export const query = celebrate({
+  [Segments.QUERY]: {
+    start_date: Joi.string().required(),
+    end_date: Joi.string().required(),
+  },
+});
+
 export const create = celebrate({
   [Segments.BODY]: {
     day: Joi.date(),

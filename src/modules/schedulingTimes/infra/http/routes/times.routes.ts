@@ -1,7 +1,8 @@
 import { Router } from 'express';
 
-import { timesController } from '../controllers';
-import { create, id } from './validations/times.validation';
+import { availableSchedulesController } from '../controllers/availableSchedulesController';
+import { timesController } from '../controllers/timesController';
+import { create, id, query } from './validations/times.validation';
 
 const timesRouter = Router();
 
@@ -15,6 +16,10 @@ timesRouter.get('/', (request, response) => {
 
 timesRouter.delete('/:id', id, (request, response) => {
   return timesController.delete(request, response);
+});
+
+timesRouter.get('/available', query, (request, response) => {
+  return availableSchedulesController.index(request, response);
 });
 
 export { timesRouter };
