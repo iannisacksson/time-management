@@ -1,0 +1,296 @@
+{
+  "openapi": "3.0.0",
+  "info": {
+    "title": "Documentação Time Management",
+    "description": "Desafio técnico para a empresa Cubos!",
+    "version": "1.0.0",
+    "contact": {
+      "email": "iisackssonoliveira@gmail.com"
+    }
+  },
+  "paths": {
+    "/times": {
+      "post": {
+        "tags": ["Horários"],
+        "summary": "Cadastrar regras de horários para atendimento diário",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "day": {
+                    "type": "date"
+                  },
+                  "day_of_week": {
+                    "type": "string",
+                    "enum": [0, 1, 2, 3, 4, 5, 6]
+                  },
+                  "intervals": {
+                    "type": "string",
+                    "items": {
+                      "type": "object",
+                      "properties": {
+                        "start": "string",
+                        "end": "string"
+                      }
+                    }
+                  },
+                  "type": {
+                    "type": "string",
+                    "enum": ["daily", "specific", "weekly"],
+                    "required": true
+                  }                  
+                }
+              },
+              "example": {
+                "type": "daily",
+                "intervals": [{
+                  "start": "08:00",
+                  "end": "12:00"
+                }]
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Created",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "id": {
+                      "type": "string",
+                      "format": "uuid"
+                    },
+                    "type": {
+                      "type": "string"
+                    },
+                    "day": {
+                      "type": "string"
+                    },
+                    "intervals": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "start": "string",
+                          "end": "string"
+                        }
+                      }
+                    },
+                    "day_of_week": {
+                      "type": "number"
+                    }
+                  }
+                },
+                "example": {
+                  "id": "8611b453-e9c9-49c7-9554-a91ecc39e084",
+                  "type": "daily",
+                  "intervals": [{
+                    "start": "08:00",
+                    "end": "12:00"
+                  }]
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Já tem horários cadastrados",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string"
+                    }
+                  }
+                },
+                "example": {
+                  "status": "error",
+                  "message": {
+                    "oneOf": [
+                      "Já tem horários cadastrados.",
+                      "Informe o intervalo de atendimento."
+                    ]
+                  }
+                }
+              }
+            }
+          },
+          "500": {
+            "$ref": "#/errors/Internal"
+          }
+        }
+      },
+      "get": {
+        "tags": ["Horários"],
+        "summary": "Listar regras de horários cadastrados",
+        "responses": {
+          "200": {
+            "description": "Listar regras de horários",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "id": {
+                      "type": "string",
+                      "format": "uuid"
+                    },
+                    "type": {
+                      "type": "string"
+                    },
+                    "day": {
+                      "type": "string"
+                    },
+                    "intervals": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "start": "string",
+                          "end": "string"
+                        }
+                      }
+                    },
+                    "day_of_week": {
+                      "type": "number"
+                    }
+                  }
+                },
+                "example": [{
+                  "id": "8611b453-e9c9-49c7-9554-a91ecc39e084",
+                  "type": "daily",
+                  "intervals": [{
+                    "start": "08:00",
+                    "end": "12:00"
+                  }]
+                }]
+              }
+            }
+          },
+          "500": {
+            "$ref": "#/errors/Internal"
+          }
+        }
+      }
+    },
+    "/times/{id}": {
+      "delete": {
+        "tags": ["Horários"],
+        "summary": "Deletar regras de horários cadastrados",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "Id da regra cadastrada",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "Deletar regra de horário"
+          },
+          "500": {
+            "$ref": "#/errors/Internal"
+          }
+        }
+      }
+    },
+    "/times/available": {
+      "get": {
+        "tags": ["Horários"],
+        "summary": "Listar horários disponíveis",
+        "parameters": [
+          {
+            "name": "start_date",
+            "in": "query",
+            "description": "Data inicial",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "end_date",
+            "in": "query",
+            "description": "Data final",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "List",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "day": {
+                      "type": "string"
+                    },
+                    "intervals": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "start": "string",
+                          "end": "string"
+                        }
+                      }
+                    }
+                  }
+                },
+                "example": [
+                  {
+                    "day": "08-11-2021",
+                    "intervals": [
+                      {
+                        "start": "08:00",
+                        "end": "12:00"
+                      }
+                    ]
+                  }
+                ]
+              }
+            }
+          },
+          "500": {
+            "$ref": "#/errors/Internal"
+          }
+        }
+      }
+    }
+  },
+  "errors": {
+    "Internal": {
+      "description": "Internal Server Error",
+      "content": {
+        "application/json": {
+          "schema": {
+            "type": "object",
+            "properties": {
+              "message": {
+                "type": "string"
+              }
+            }
+          },
+          "example": {
+            "status": "error",
+            "message": "Server error"
+          }
+        }
+      }
+    }
+  }
+}
