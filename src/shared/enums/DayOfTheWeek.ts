@@ -1,11 +1,11 @@
 enum DayOfTheWeek {
-  sunday = 'sunday',
-  monday = 'monday',
-  tuesday = 'tuesday',
-  wednesday = 'wednesday',
-  thursday = 'thursday',
-  friday = 'friday',
-  saturday = 'saturday',
+  sunday = 0,
+  monday,
+  tuesday,
+  wednesday,
+  thursday,
+  friday,
+  saturday,
 }
 
 export { DayOfTheWeek };
