@@ -3,6 +3,12 @@ import { Joi, Segments, celebrate } from 'celebrate';
 import { DayOfTheWeek } from '@shared/enums/DayOfTheWeek';
 import { ScheduleType } from '@shared/enums/ScheduleType';
 
+export const id = celebrate({
+  [Segments.PARAMS]: {
+    id: Joi.string().uuid().required(),
+  },
+});
+
 export const create = celebrate({
   [Segments.BODY]: {
     day: Joi.date(),
