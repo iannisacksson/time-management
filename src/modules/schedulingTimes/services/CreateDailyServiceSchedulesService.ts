@@ -20,7 +20,7 @@ class CreateDailyServiceSchedulesService {
       throw new AppError('Já tem horários cadastrados.');
     }
 
-    if (!intervals.length) {
+    if (!intervals || !intervals.length) {
       throw new AppError('Informe o intervalo de atendimento.');
     }
 

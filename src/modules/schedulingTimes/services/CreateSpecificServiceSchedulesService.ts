@@ -41,7 +41,7 @@ class CreateSpecificServiceSchedulesService {
       throw new AppError('Data ocupada.');
     }
 
-    if (!intervals.length) {
+    if (!intervals || !intervals.length) {
       throw new AppError('Informe o intervalo de atendimento.');
     }
 

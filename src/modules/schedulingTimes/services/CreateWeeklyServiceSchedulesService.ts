@@ -30,7 +30,7 @@ class CreateWeeklyServiceSchedulesService {
       throw new AppError('Já foi adicionado outro tipo de horário');
     }
 
-    if (!dayOfWeek.length) {
+    if (!dayOfWeek || !dayOfWeek.length) {
       throw new AppError('Informe os dias da semana de atendimento.');
     }
 
@@ -48,7 +48,7 @@ class CreateWeeklyServiceSchedulesService {
       }
     });
 
-    if (!intervals.length) {
+    if (!intervals || !intervals.length) {
       throw new AppError('Informe o intervalo de atendimento.');
     }
 
